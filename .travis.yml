@@ -32,10 +32,11 @@ install:
 
 script:
   - cd /home/travis/build/opentibiabr/otservbr-global
+  - export CXXFLAGS="$CXXFLAGS -DBOOST_ASIO_DISABLE_NOEXCEPT=1 "
   - /home/travis/build/opentibiabr/vcpkg/vcpkg --feature-flags=binarycaching,manifests,versions install
   - mkdir build
   - cd build
-  - cmake -DASIO_DISABLE_NOEXCEPT=1 -DBOOST_ASIO_DISABLE_NOEXCEPT=1 -DCMAKE_TOOLCHAIN_FILE=/home/travis/build/opentibiabr/vcpkg/scripts/buildsystems/vcpkg.cmake ..
+  - cmake -DBOOST_ASIO_DISABLE_NOEXCEPT=1 -DCMAKE_TOOLCHAIN_FILE=/home/travis/build/opentibiabr/vcpkg/scripts/buildsystems/vcpkg.cmake ..
   - cd ..
   - NUMBER_OF_PROCESSORS=$(nproc --all)
   - build-wrapper-linux-x86-64 --out-dir bw-output cmake --build build/
